@@ -51,31 +51,47 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-<!--                            <addClasspath>true</addClasspath>-->
-                            <classpathPrefix>libs/</classpathPrefix>
-                            <mainClass>
-<!--                                ${project.main.stub}-->
-                                ${project.main.combine}
-                            </mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-jar-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <archive>-->
+<!--                        <manifest>-->
+<!--&lt;!&ndash;                            <addClasspath>true</addClasspath>&ndash;&gt;-->
+<!--                            <classpathPrefix>libs/</classpathPrefix>-->
+<!--                            <mainClass>-->
+<!--&lt;!&ndash;                                ${project.main.stub}&ndash;&gt;-->
+<!--                                ${project.main.combine}-->
+<!--                            </mainClass>-->
+<!--                        </manifest>-->
+<!--                    </archive>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         </plugins>
 
     </build>
 
     <profiles>  
         <profile>  
-            <id>1</id>  
+            <id>1</id>
             <build>  
                 <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <configuration>
+                            <archive>
+                                <manifest>
+<!--                            <addClasspath>true</addClasspath>-->
+                                    <classpathPrefix>libs/</classpathPrefix>
+                                    <mainClass>
+<!--                                ${project.main.stub}-->
+                                        ${project.main.combine}
+                                    </mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </plugin>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
@@ -107,6 +123,57 @@
 <!--                <project.basedir>src/main/java</project.basedir>-->
 <!--            </properties>-->
         </profile>
+        <profile>
+            <id>2</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <!--                            <addClasspath>true</addClasspath>-->
+                                    <classpathPrefix>libs/</classpathPrefix>
+                                    <mainClass>
+                                        <!--                                ${project.main.stub}-->
+                                        ${project.exercise3.stub}
+                                    </mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.2.1</version>
+                        <executions>
+                            <execution>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>/usr/local/hadoop/bin/hadoop</executable>
+                                    <!--                                    <argument>&#45;&#45;module-path</argument>-->
+                                    <!-- <mainClass>exercise2.StubDriver</mainClass>   -->
+                                    <arguments>
+                                        <argument>jar</argument>
+                                        <argument>${project.build.directory}/${project.artifactId}-${project.version}.jar</argument>
+                                        <argument>${project.main.selecting}</argument>
+                                        <argument>${project.resources}/100-0.txt</argument>
+                                        <argument>${project.resources}/output/</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <!--            <properties>-->
+            <!--                <project.basedir>src/main/java</project.basedir>-->
+            <!--            </properties>-->
+        </profile>
 
     </profiles>
     <properties>
@@ -121,6 +188,8 @@
 
         <project.main.stub>exercise2.StubDriver</project.main.stub>
         <project.main.combine>exercise2.WordCount</project.main.combine>
+        <project.exercise3.stub>exercise3.FriendSuggestion</project.exercise3.stub>
+
         <project.main.selecting>${project.main.combine}</project.main.selecting>
     </properties>
 
