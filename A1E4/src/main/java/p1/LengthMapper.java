@@ -15,7 +15,7 @@ public class LengthMapper extends Mapper<LongWritable, Text, IntWritable, IntWri
     public void map(LongWritable key, Text value, Context context)
             throws IOException, InterruptedException {
 
-        for (String token: value.toString().split("\\s+")) {
+        for (String token: value.toString().split("[!\\\"#$%&'()*+,\\-./:;<=>?@\\[\\]^_`{|}~\\s]+")) {
             context.write(new IntWritable(token.length()), ONE);
         }
     }
